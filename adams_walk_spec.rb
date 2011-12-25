@@ -1,7 +1,42 @@
 require 'adams_walk'
 require 'rspec'
 
-describe "AdamsWalk#battling?" do
+describe "AdamsWalk.run" do
+  before do
+    AdamsWalk.mock!
+  end
+  
+  it "greets you" do
+    AdamsWalk.run
+    AdamsWalk.messages.include?("You are Adam from The Village!").should == true
+  end
+  
+  it "displays initial health as 0" do
+    AdamsWalk.run
+    AdamsWalk.messages.include?("Health: 0\n\nWalk\nExplore\nInventory\nQuit\n").should == true
+  end
+    
+end
+
+describe "AdamsWalk.print" do
+  before do
+    AdamsWalk.mock!
+  end
+  
+  it "messages is empty by default" do
+    AdamsWalk.messages.should == []
+  end
+
+  it "it correctly prints when mocked" do
+    AdamsWalk.print "one"
+    AdamsWalk.print "two"
+    AdamsWalk.print "three"
+    
+    AdamsWalk.messages.should == ["one", "two", "three"]
+  end
+end
+
+describe "AdamsWalk.battling?" do
   it "is true when both characters are over 0 health" do
     AdamsWalk.battling?(5, 8).should == true
   end
